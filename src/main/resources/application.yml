@@ -46,10 +46,6 @@ spring:
             partition:
               assignment:
                 strategy: partition.poc.messaging.assignor.CanaryPriorityAssignor
-application:
-  curator:
-    connection-string: ${ENV_CURATOR_CONNECT_STRING}
-    auto-start-enabled: true
 
 logging:
   level:
