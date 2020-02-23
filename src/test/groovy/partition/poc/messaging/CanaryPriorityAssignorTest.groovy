@@ -39,10 +39,6 @@ class CanaryPriorityAssignorTest extends Specification implements ObjectLabels {
 
 	@Unroll
 	def "assign for #partitionsPerTopic using #subscriptions should be #expectedAssignments"() {
-		/*
-			README
-
-		 */
 		when:
 			def actualAssignments = assignor.assign(partitionsPerTopic, subscriptions as Map<String, PartitionAssignor.Subscription>)
 		then:
@@ -83,5 +79,21 @@ class CanaryPriorityAssignorTest extends Specification implements ObjectLabels {
 			[t1: 2, t2: 2, t3: 2] | [c1: sub_t1t2t3, c2: sub_t1t2t3, c3c: subc_t1t2t3()]     | [c1: [tp_t1_1, tp_t2_1, tp_t3_1], c2: [], c3c: [tp_t1_0, tp_t2_0, tp_t3_0]]
 			[t1: 2, t2: 2, t3: 3] | [c1c: subc_t1t2t3(), c2: sub_t1t2t3, c3c: subc_t1t2t3()] | [c1c: [tp_t1_0, tp_t2_0, tp_t3_0], c2: [tp_t3_2], c3c: [tp_t1_1, tp_t2_1, tp_t3_1]]
 			[t1: 3, t2: 3]        | [c1: sub_t1t2, c2c: sub_t1t2, c3: sub_t2]                | [c1: [tp_t1_0, tp_t1_1, tp_t2_0], c2c: [tp_t1_2, tp_t2_1], c3: [tp_t2_2]]
+	}
+
+	@Unroll
+	def "assign for #partitionsPerTopic using #subscriptions should be #expectedAssignments in complex scenarios"() {
+		when:
+			def actualAssignments = assignor.assign(partitionsPerTopic, subscriptions as Map<String, PartitionAssignor.Subscription>)
+		then:
+			actualAssignments == expectedAssignments
+		where:
+			partitionsPerTopic           | subscriptions                                                                                      | expectedAssignments
+			// 4 topics, 5 consumers, 2 canary, 3 regulars
+			[t1: 2, t2: 2, t3: 2, t4: 2] | [c1: sub_t1t2t3t4, c2: sub_t1t2t3t4, c3: sub_t1t2t3t4, c4c: subc_t1t2t3t4(), c5c: subc_t1t2t3t4()] | [c1: [], c2: [], c3: [], c4c: [tp_t4_0, tp_t1_0, tp_t2_0, tp_t3_0], c5c: [tp_t4_1, tp_t1_1, tp_t2_1, tp_t3_1]]
+
+			// 1 topic, 4 consumers, 1 canary, 3 regulars
+			[t1: 3]                      | [c1: sub_t1, c2: sub_t1, c3c: subc_t1(), c4: sub_t1]                                               | [c1: [tp_t1_1], c2: [tp_t1_2], c3c: [tp_t1_0], c4: []]
+
 	}
 }

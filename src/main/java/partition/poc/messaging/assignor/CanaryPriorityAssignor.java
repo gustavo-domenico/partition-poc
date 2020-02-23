@@ -59,7 +59,6 @@ public class CanaryPriorityAssignor extends AbstractPartitionAssignor {
 	@Override
 	public Map<String, List<TopicPartition>> assign(Map<String, Integer> partitionsPerTopic,
 	                                                Map<String, Subscription> subscriptions) {
-
 		// Topic/partition combination for each member to be returned
 		Map<String, List<TopicPartition>> assignment = new HashMap<>();
 
