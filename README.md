@@ -47,9 +47,10 @@ The tests are using the following convention:
 | sub_tX...  | Subscription    | sub_t1t2 means that the consumer subscribes to the topics t1 and t2.     | 
 | subc_tX... | Subscription    | subc_t1 means that the canary consumer subscribes to the topic t1.       | 
 
-Example of scenario:
+Example of scenarios:
 
 | partitionsPerTopic | subscriptions | expectedAssignments | Description                                                                                                                      |
 |--------------------|---------------|---------------------|----------------------------------------------------------------------------------------------------------------------------------|
 | [t1: 1]            | [c1: sub_t1]  | [c1: [tp_t1_0]]     | We have one topic t1 and one subscription, so the expected assignment is the consumer for the topic t1 and the only partition 0. |
+| [t1: 1]            | [c1: sub_t1, c2c: subc_t1()]  | [c1: [], c2c: [tp_t1_0]]     | We have one topic t1 and two subscriptions, so the expected assignment is the canary consumer for the topic t1 and the only partition 0. |
 
