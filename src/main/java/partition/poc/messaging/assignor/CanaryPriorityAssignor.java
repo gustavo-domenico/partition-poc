@@ -90,7 +90,7 @@ public class CanaryPriorityAssignor extends AbstractPartitionAssignor {
 				continue;
 
 			// Prioritizing the canary members first
-			consumersForTopic.sort(comparing(canaryMembers::contains));
+			consumersForTopic.sort(comparing(o -> !canaryMembers.contains(o)));
 
 			int numPartitionsPerConsumer = numPartitionsForTopic / consumersForTopic.size();
 			int consumersWithExtraPartition = numPartitionsForTopic % consumersForTopic.size();
