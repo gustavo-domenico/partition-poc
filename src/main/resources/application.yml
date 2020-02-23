@@ -1,0 +1,69 @@
+server:
+  port: 0
+spring:
+  application:
+    name: partition-poc
+  profiles:
+    active: development
+  main:
+    banner-mode: off
+  output:
+    ansi:
+      enabled: ALWAYS
+  kafka:
+    client-id: paritionPoc
+    bootstrap-servers: ${ENV_KAFKA_BOOTSTRAP_SERVERS}
+    properties:
+      request.timeout.ms: 60000
+    producer:
+      acks: 'all'
+      retries: 1
+      batch-size: 163840
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      groupId: 'partition-poc'
+      maxPollRecords: 10
+      autoOffsetReset: 'earliest'
+      enableAutoCommit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  cloud:
+    stream:
+      bindings:
+        myTopicChannel:
+          destination: myTopic,mySecondTopic
+          group: paritionPoc
+          consumer:
+            contentType: application/text
+            autoCommitOffset: true
+            headerMode: none
+      kafka:
+        binder:
+          autoCreateTopics: false
+          brokers: ${ENV_KAFKA_BOOTSTRAP_SERVERS}
+          consumer-properties:
+            partition:
+              assignment:
+                strategy: partition.poc.messaging.assignor.CanaryPriorityAssignor
+application:
+  curator:
+    connection-string: ${ENV_CURATOR_CONNECT_STRING}
+    auto-start-enabled: true
+
+logging:
+  level:
+    partition:
+        poc:
+          messaging:
+            assignor:
+              CanaryPriorityAssignor: debug
+---
+
+spring:
+  profiles: development
+
+ENV_KAFKA_BOOTSTRAP_SERVERS: localhost:9092
+ENV_CURATOR_CONNECT_STRING: localhost:2181
+
+---
