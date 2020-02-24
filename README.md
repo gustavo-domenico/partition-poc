@@ -50,7 +50,8 @@ or canary insances:
 
 You should see in the logs that the canary instances had priority in the partition assignment:
 
-``
+~~~~
+
  p.p.m.assignor.CanaryPriorityAssignor    : Assigned member paritionPoc-0-8480b121-4d49-4812-9e29-d104572ffcc9(isCanary: true) to topic/partitions [mySecondTopic-0].
  
 p.p.m.assignor.CanaryPriorityAssignor    : Assigned member paritionPoc-0-b2bb1529-32cb-4409-ad9a-4b8fc6c717c3(isCanary: true) to topic/partitions [mySecondTopic-1].
@@ -61,7 +62,7 @@ p.p.m.assignor.CanaryPriorityAssignor    : Assigned member paritionPoc-0-69f3b2e
 
 p.p.m.assignor.CanaryPriorityAssignor    : Assigned member paritionPoc-0-49025c9f-f0bb-4a30-9764-449eb82d9d6e(isCanary: false) to topic/partitions [].
 
-``
+~~~~
 
 ### Tests
 
