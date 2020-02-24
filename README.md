@@ -52,11 +52,15 @@ You should see in the logs that the canary instances had priority in the partiti
 
 ``
  p.p.m.assignor.CanaryPriorityAssignor    : Assigned member paritionPoc-0-8480b121-4d49-4812-9e29-d104572ffcc9(isCanary: true) to topic/partitions [mySecondTopic-0].
+ 
 p.p.m.assignor.CanaryPriorityAssignor    : Assigned member paritionPoc-0-b2bb1529-32cb-4409-ad9a-4b8fc6c717c3(isCanary: true) to topic/partitions [mySecondTopic-1].
+
 p.p.m.assignor.CanaryPriorityAssignor    : Assigned member paritionPoc-0-d33b543e-4726-45a3-b48e-1873e95a147d(isCanary: false) to topic/partitions [mySecondTopic-2].
+
 p.p.m.assignor.CanaryPriorityAssignor    : Assigned member paritionPoc-0-69f3b2e1-0237-428a-b1a2-04e68609c1bf(isCanary: false) to topic/partitions [].
+
 p.p.m.assignor.CanaryPriorityAssignor    : Assigned member paritionPoc-0-49025c9f-f0bb-4a30-9764-449eb82d9d6e(isCanary: false) to topic/partitions [].
-p.p.m.assignor.CanaryPriorityAssignor    : Assigned member paritionPoc-0-76a3d546-3093-47c7-821a-dedc8651bafb(isCanary: false) to topic/partitions [].
+
 ``
 
 ### Tests
